@@ -9,9 +9,17 @@ internal class Program {
 
         var context = new AppDbContext();
 
-        var requests = context.Requests.Include(x => x.User).ToList();
+        var requestlines = context.Requestlines.Include(x => x.Request).Include(x => x.Product).ToList();
 
-        requests.ForEach(x => Console.WriteLine($"{x.Description} | {x.User!.Username}"));
+        requestlines.ForEach(
+            x => Console.WriteLine(
+                $"{x.Request!.Description} | {x.Product!.Name} " +
+                $" | {x.Quantity} | {x.Product!.Price:C} " +
+                $" | {x.Quantity * x.Product!.Price:C} "
+        ));
+            
+        var total = context.Requestlines.Include(x => x.Product).Sum(x => x.Quantity * x.Product!.Price);
+        Console.WriteLine($"Total: {total:C}");
 
     }
 }

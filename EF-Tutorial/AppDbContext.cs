@@ -14,6 +14,7 @@ public class AppDbContext : DbContext {
     public DbSet<Vendor> Vendors { get; set; }
     public DbSet<Product> Products { get; set; }
     public DbSet<Request> Requests { get; set; }
+    public DbSet<Requestline> Requestlines { get; set; }
 
 
     public AppDbContext() { }
